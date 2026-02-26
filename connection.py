@@ -12,11 +12,9 @@ COLLECTION = os.getenv("COLLECTION")
 # Mongodb connection URI
 uri = f"mongodb+srv://{USER_NAME}:{PASSWORD}@cluster0.r2krjac.mongodb.net/"
 
-def get_db():
-    MONGO_URI = os.getenv('MONGO_URI')
-    client = MongoClient(MONGO_URI)
-    db = client['mydatabase']
-    print("Connected to MongoDB")
-    return db
+client = MongoClient(uri)
+db = client[DB]
+collection = db[COLLECTION]
 
-get_db()
+print("connected successfully")
+
