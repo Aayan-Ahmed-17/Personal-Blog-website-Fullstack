@@ -8,4 +8,3 @@ async def root():
 @router.get("/health")
 async def health():
     return {"status": "Api is running", "status_code": 200}
-    
