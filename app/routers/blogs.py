@@ -14,3 +14,7 @@ async def health():
 @router.post("/blog")
 async def create_blog(blog: Blog):
     return {"message": "Blog created successfully", "blog": blog.model_dump(), "status": "success", "status_code": 201}
+
+# @router.get("/blogs/")
+# async def get_blogs():
+#     return {"message": "Blogs retrieved successfully", "blogs": [], "status": "success", "status_code": 200}
