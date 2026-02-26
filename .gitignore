@@ -1,0 +1,39 @@
+# Byte-code files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.egg-info/
+.eggs/
+
+# Virtual environment
+.venv/
+env/
+venv/
+ENV/
+bin/
+lib/
+include/
+
+# Build artifacts
+dist/
+build/
+*.whl
+
+# Installer logs
+pip-log.txt
+pip-delete-this-line.txt
+
+# OS-specific files
+.DS_Store # macOS
+Thumbs.db # Windows
+
+# IDE-specific files and folders
+.idea/ # PyCharm
+.vscode/ # VS Code
+*.swp # Vim
+
+# Environment variables
+.env
+.flaskenv
+secrets.toml
