@@ -1,38 +1,63 @@
 from scrape import get_data, headers, url
 from bs4 import BeautifulSoup
 
-response = get_data(url=url, headers=headers)
-
 blog_container_select = "div.grid.w-full.grid-cols-1.gap-4.p-2"
-item_card_select = "div.p-6.bg-white.rounded-xl"
 blog_link_select = "div a"
 blog_img_link_select = "div a div img"
 blog_title_select = 'div a h3'
 blog_update_data_select = 'div div div span'
 blog_description_select = 'div div p'
 
-container = None
 
-"""
-===========desired extract content==============
-blog_link
-img_link
-title
-latest date
-description
-"""
+def parse_data(response):
+    try:
+        soup = BeautifulSoup(response.content, "html.parser")
+
+        blog_container = soup.select_one(blog_container_select)
+        if not blog_container:
+            print("Blog container not found — selector may be outdated")
+            return None
+
+        blog_link = blog_container.select_one(blog_link_select)
+        img_tag = blog_container.select_one(blog_img_link_select)
+        title_tag = blog_container.select_one(blog_title_select)
+        date_tags = blog_container.select(blog_update_data_select)
+        description_tag = blog_container.select_one(blog_description_select)
+
+        # Validate before extracting
+        if not blog_link:
+            print("Blog link not found")
+            return None
+        if not img_tag:
+            print("Image tag not found")
+            return None
+        if not title_tag:
+            print("Title tag not found")
+            return None
+        if len(date_tags) < 4:
+            print(f"Expected 4+ date spans, found {len(date_tags)}")
+            return None
+        if not description_tag:
+            print("Description tag not found")
+            return None
+
+        return {
+            "blog_link":        blog_link.get("href"),
+            "img_link":         img_tag.get("src"),
+            "title":            title_tag.text.strip(),
+            "latest_date":      date_tags[3].text.strip(),
+            "description":      description_tag.text.strip(),
+        }
+
+    except Exception as e:
+        print(f"Unexpected error during parsing: {e}")
+        return None
 
 
-# def parse_data():
-#     try:
-soup = BeautifulSoup(response.content, "html.parser")  # type: ignore
-blog_container = soup.select_one(blog_container_select)
-blog_link = blog_container.select_one(blog_link_select).get("href")  # type: ignore
-img_link = blog_container.select_one(blog_img_link_select).get("src") # type: ignore
-blog_title = blog_container.select_one(blog_title_select).text # type: ignore
-blog_update_data = blog_container.select(blog_update_data_select)[3].text # type: ignore
-blog_description = blog_container.select_one(blog_description_select).text # type: ignore
+response = get_data(url=url, headers=headers)
 
-        # print(blog)
-    # except Exception as e:
-    #     print(f"Error: {e}")
+if response:
+    result = parse_data(response)
+    if result:
+        for key, value in result.items():
+            print(f"{key}: {value}")
