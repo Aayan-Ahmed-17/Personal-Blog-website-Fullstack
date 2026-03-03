@@ -9,6 +9,7 @@ blog_link_select = "div a"
 blog_img_link_select = "div a div img"
 blog_title_select = 'div a h3'
 blog_update_data_select = 'div div div span'
+blog_description_select = 'div div p'
 
 container = None
 
@@ -30,6 +31,7 @@ blog_link = blog_container.select_one(blog_link_select).get("href")  # type: ign
 img_link = blog_container.select_one(blog_img_link_select).get("src") # type: ignore
 blog_title = blog_container.select_one(blog_title_select).text # type: ignore
 blog_update_data = blog_container.select(blog_update_data_select)[3].text # type: ignore
+blog_description = blog_container.select_one(blog_description_select).text # type: ignore
 
         # print(blog)
     # except Exception as e:
