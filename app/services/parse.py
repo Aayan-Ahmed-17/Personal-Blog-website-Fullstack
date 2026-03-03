@@ -1,4 +1,4 @@
-from scrape import get_data, headers, url
+from app.services.scrape import get_data, headers, url
 from bs4 import BeautifulSoup
 
 blog_container_select = "div.grid.w-full.grid-cols-1.gap-4.p-2"
@@ -56,8 +56,8 @@ def parse_data(response):
 
 response = get_data(url=url, headers=headers)
 
-if response:
-    result = parse_data(response)
-    if result:
-        for key, value in result.items():
-            print(f"{key}: {value}")
+# if response:
+#     result = parse_data(response)
+#     if result:
+#         for key, value in result.items():
+#             print(f"{key}: {value}")
