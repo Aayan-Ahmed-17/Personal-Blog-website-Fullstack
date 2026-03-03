@@ -3,8 +3,9 @@ from bs4 import BeautifulSoup
 
 response = get_data(url=url, headers=headers)
 
-blog_container_classes = "div.grid.w-full.grid-cols-1.gap-4.p-2"
-item_card_classes = "div.p-6.bg-white.rounded-xl"
+blog_container_select = "div.grid.w-full.grid-cols-1.gap-4.p-2"
+item_card_select = "div.p-6.bg-white.rounded-xl"
+blog_link_select = "div a"
 
 container = None
 
@@ -21,7 +22,8 @@ description
 def parse_data():
     try:
         soup = BeautifulSoup(response.content, "html.parser")  # type: ignore
-        container = soup.select_one(blog_container_classes)
-
+        blog_container = soup.select_one(blog_container_select)
+        blog_link = blog_container.select_one(blog_link_select).get("href")  # type: ignore
+        print(blog_link)
     except Exception as e:
         print(f"Error: {e}")
