@@ -5,8 +5,8 @@ blog_container_select = "div.grid.w-full.grid-cols-1.gap-4.p-2"
 blog_link_select = "div a"
 blog_img_link_select = "div a div img"
 blog_title_select = 'div a h3'
-blog_update_data_select = 'div div div span'
-blog_description_select = 'div div p'
+blog_update_data_select = 'div div div span.text-gray-500'
+blog_description_select = 'div div p.mt-6.leading-normal.text-gray-600.line-clamp-3'
 
 
 def parse_data(response):
@@ -45,7 +45,7 @@ def parse_data(response):
             "blog_link":        blog_link.get("href"),
             "img_link":         img_tag.get("src"),
             "title":            title_tag.text.strip(),
-            "latest_date":      date_tags[3].text.strip(),
+            "latest_date":      date_tags[1].text.strip(),
             "description":      description_tag.text.strip(),
         }
 
