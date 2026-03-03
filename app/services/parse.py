@@ -8,10 +8,20 @@ item_card_classes = "div.p-6.bg-white.rounded-xl"
 
 container = None
 
-try:
-  soup = BeautifulSoup(response.content, "html.parser") # type: ignore
-  container = soup.select_one(blog_container_classes)
+"""
+===========desired extract content==============
+blog_link
+img_link
+title
+latest date
+description
+"""
 
 
-except Exception as e:
-  print(f"Error: {e}")
+def parse_data():
+    try:
+        soup = BeautifulSoup(response.content, "html.parser")  # type: ignore
+        container = soup.select_one(blog_container_classes)
+
+    except Exception as e:
+        print(f"Error: {e}")
