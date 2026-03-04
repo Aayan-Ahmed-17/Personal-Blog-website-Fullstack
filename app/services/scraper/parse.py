@@ -1,4 +1,4 @@
-from app.services.scrape import get_data, headers, url
+from app.services.scraper.scrape import get_data, headers, url
 from bs4 import BeautifulSoup
 
 blog_grid_container_select = "div.grid.w-full.grid-cols-1.gap-4.p-2"

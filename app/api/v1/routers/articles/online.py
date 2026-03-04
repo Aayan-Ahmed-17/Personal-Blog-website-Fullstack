@@ -1,5 +1,5 @@
-from app.services.parse import parse_data
-from app.services.scrape import get_data, url, headers
+from app.services.scraper.parse import parse_data
+from app.services.scraper.scrape import get_data, url, headers
 from fastapi import APIRouter
 
 router = APIRouter()
