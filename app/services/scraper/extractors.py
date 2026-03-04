@@ -6,8 +6,8 @@ from . import selectors as sel
 
 response = get_data(url=url, headers=headers)
 
-# soup = BeautifulSoup(sel.BLOG_GRID_CONTAINER.content, "html.parser") # type: ignore
-# blog_containers = soup.select(sel.BLOG_CONTAINER) # type: ignore
+soup = BeautifulSoup(response.content, "html.parser") # type: ignore
+blog_grid_container = soup.select(sel.BLOG_GRID_CONTAINER) # type: ignore
 # def extract_blog_link(container: Tag) -> Optional[str]:
 #     tag = container.select_one(sel.BLOG_LINK)
 #     return tag.get("href") if tag else None
