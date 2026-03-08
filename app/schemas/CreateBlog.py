@@ -8,8 +8,8 @@ class CreateBlog(BaseModel):
     This is the database document structure.
     """
     author_name: str
-    author_email: EmailStr
+    author_email: Optional[EmailStr]
     title: str
-    description: str
+    description: Optional[str]
     created_at: datetime = Field(default_factory=datetime.now)
     updated_at: datetime = Field(default_factory=datetime.now)
