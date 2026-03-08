@@ -3,7 +3,7 @@ from app.schemas.CreateBlog import CreateBlog
 
 router = APIRouter(
     prefix="/blogs",  # All paths in this router will start with "/blogs"
-    tags=["blogs"],  # Adds a tag for documentation in /docs
+    tags=["Blogs"],  # Adds a tag for documentation in /docs
 )
 
 """
