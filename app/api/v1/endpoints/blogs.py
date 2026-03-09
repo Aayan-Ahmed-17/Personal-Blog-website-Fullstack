@@ -1,5 +1,6 @@
 from fastapi import APIRouter
-from app.schemas import blog_schema
+from app.schemas.blog_schema import BlogCreate
+from app.services.crud.blog_crud import create_blog # type: ignore
 
 router = APIRouter(
     prefix="/blogs",  # All paths in this router will start with "/blogs"
@@ -17,8 +18,9 @@ DELETE /api/blogs/{id}: Delete a blog post.
 
 
 @router.post("/")
-async def create_blog(blog: CreateBlog):  # type: ignore
-    return {"message": "Blog created successfully", "blog": blog}
+async def create_blog(blog: BlogCreate):
+    return create_blog(blog) # type: ignore
+    
 
 
 @router.get("/")
@@ -34,7 +36,7 @@ async def read_blog(id: str):
 
 
 @router.put("/{id}")
-async def update_blog(id: str, blog: CreateBlog):  # type: ignore
+async def update_blog(id: str, blog: BlogCreate):  # type: ignore
     """Updates a specific blog post by its ID."""
     return {"message": f"Updating blog with ID: {id}", "updated_blog": blog}
 

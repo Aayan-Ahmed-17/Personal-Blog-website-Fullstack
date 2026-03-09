@@ -2,7 +2,7 @@ from app.db.mongodb import blog_collection
 from app.utils.serializer import blog_serializer
 
 
-def create_blog(blog_data: dict):
+def create_blog(blog_data):
     result = blog_collection.insert_one(blog_data)
     return str(result.inserted_id)
 
