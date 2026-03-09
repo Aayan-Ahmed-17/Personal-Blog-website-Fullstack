@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.schemas.blog_schema import CreateBlog
+from app.schemas import blog_schema
 
 router = APIRouter(
     prefix="/blogs",  # All paths in this router will start with "/blogs"
