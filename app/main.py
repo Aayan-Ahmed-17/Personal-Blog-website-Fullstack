@@ -1,5 +1,5 @@
 # from app.api.v1.endpoints.blogs import router as blogs_router
-from app.api.v1.endpoints import blogsRoutes, scraper
+from app.api.v1.routes import blogsRoutes, scraper
 from fastapi import FastAPI
 
 app = FastAPI(

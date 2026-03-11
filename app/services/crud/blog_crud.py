@@ -6,12 +6,6 @@ from bson import ObjectId
 from app.db.mongodb import blog_collection
 from app.schemas.serializeObjects import serializeDict, serializeList
 from app.models.blog_model import BlogModel
-# from app.utils.serializer import blog_serializer
-
-
-# async def InsertUser(data: BlogModel):
-#     result = blog_collection.insert_one(dict(data))
-#     return serializeDict(blog_collection.find_one({"_id": ObjectId(result.inserted_id)}))
 
 def create_blog(blog_data: BlogModel):
     try:
@@ -23,10 +17,8 @@ def create_blog(blog_data: BlogModel):
 
 
 def get_all_blogs():
-    blogs = blog_collection.find()
-    return [blog_serializer(blog) for blog in blogs]
+    return serializeList(blog_collection.find())
 
 
-def get_blog(blog_id):
-    blog = blog_collection.find_one({"_id": blog_id})
-    return blog_serializer(blog)
+def get_blog(id):
+    return serializeDict(blog_collection.find_one({"_id": ObjectId(id)})) 

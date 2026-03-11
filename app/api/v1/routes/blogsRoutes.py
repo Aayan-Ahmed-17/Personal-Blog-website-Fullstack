@@ -20,9 +20,6 @@ DELETE /api/blogs/{id}: Delete a blog post.
 
 @router.post("/", response_model=None)
 async def post_blog(blog: BlogModel):
-    """
-    is the code updated successfully
-    """
     return create_blog(blog) # type: ignore
     
 
