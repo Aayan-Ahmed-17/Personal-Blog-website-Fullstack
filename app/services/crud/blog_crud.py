@@ -5,9 +5,9 @@ Contains all database operations logic.
 from bson import ObjectId
 from app.db.mongodb import blog_collection
 from app.schemas.serializeObjects import serializeDict, serializeList
-from app.models.blog_model import BlogModel
+from app.models.blog_model import CreateBlog, UpdateBlog
 
-def create_blog(blog_data: BlogModel):
+def create_blog(blog_data: CreateBlog):
     try:
         result = blog_collection.insert_one(dict(blog_data))
         return serializeDict(blog_collection.find_one({"_id": ObjectId(result.inserted_id)}))
@@ -22,3 +22,15 @@ def get_all_blogs():
 
 def get_blog(id):
     return serializeDict(blog_collection.find_one({"_id": ObjectId(id)})) 
+
+def update_blog(id: str, blog_data: UpdateBlog):
+    try:
+        result = blog_collection.update_one(
+            {"_id": ObjectId(id)},
+            {
+                "$set":blog_data
+            }
+        )
+        return result
+    except Exception as e:
+        raise Exception(f"Update request error: {e}")

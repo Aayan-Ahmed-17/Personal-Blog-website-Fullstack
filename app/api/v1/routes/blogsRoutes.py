@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 # from app.schemas.blog_schema import BlogSchema, BlogSchemaUpdate
-from app.models.blog_model import BlogModel
-from app.services.crud.blog_crud import create_blog # type: ignore
+from app.models.blog_model import CreateBlog, UpdateBlog
+from app.services.crud.blog_crud import create_blog, update_blog, get_all_blogs, get_blog # type: ignore
 
 router = APIRouter(
     prefix="/blogs",  # All paths in this router will start with "/blogs"
@@ -19,7 +19,7 @@ DELETE /api/blogs/{id}: Delete a blog post.
 
 
 @router.post("/", response_model=None)
-async def post_blog(blog: BlogModel):
+async def post_blog(blog: CreateBlog): # type: ignore
     return create_blog(blog) # type: ignore
     
 
@@ -27,17 +27,21 @@ async def post_blog(blog: BlogModel):
 @router.get("/")
 async def get_blogs():
     """Retrieves all blog blogs from the database and returns them as a list."""
-    return {"message": "Retrieving all blog blogs"}
+    return get_all_blogs()
 
 
 @router.get("/{id}")
 async def read_blog(id: str):
     """Retrieves a specific blog post by its ID."""
-    return {"message": f"Retrieving blog with ID: {id}"}
+    return get_blog(id)
 
+
+@router.put("/{id}")
+async def post_blog(id: str, blog_data: UpdateBlog):
+    return update_blog(id=id, blog_data=blog_data) # type: ignore
 
 # @router.put("/{id}")
-# async def update_blog(id: str, blog: BlogCreate):  # type: ignore
+# async def update_blog(id: str, blog: UpdateBlog):  # type: ignore
 #     """Updates a specific blog post by its ID."""
 #     return {"message": f"Updating blog with ID: {id}", "updated_blog": blog}
 
