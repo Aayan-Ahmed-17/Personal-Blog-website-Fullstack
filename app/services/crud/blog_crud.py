@@ -12,7 +12,9 @@ from app.models.blog_model import CreateBlog, UpdateBlog
 
 
 def create_blog(blog_data: CreateBlog):
-  
+    """
+    Called on post route | get blog creation data | insert into mongodb
+    """
     try:
         result = blog_collection.insert_one(blog_data.model_dump())
 
@@ -28,7 +30,9 @@ def create_blog(blog_data: CreateBlog):
 
 
 def get_all_blogs():
-
+    """
+    Retrieves all blogs from mongodb
+    """
     try:
         blogs = blog_collection.find()
         return serializeList(blogs)
@@ -37,8 +41,10 @@ def get_all_blogs():
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
 
 
-def get_blog(id: str):
-
+def get_blog_by_id(id: str):
+    """
+    Finds Blog in mongodb via id | return data if found else error
+    """
     try:
         blog = blog_collection.find_one({"_id": ObjectId(id)})
 
@@ -55,11 +61,12 @@ def get_blog(id: str):
 
 
 def update_blog(id: str, blog_data: UpdateBlog):
-
+    """
+    Called on PUT route | get blog updation data | updates into mongodb
+    """
     try:
         updated = blog_collection.find_one_and_update(
-            {"_id": ObjectId(id)},
-            {"$set": blog_data.model_dump(exclude_unset=True)}
+            {"_id": ObjectId(id)}, {"$set": blog_data.model_dump(exclude_unset=True)}
         )
 
         if updated is None:
