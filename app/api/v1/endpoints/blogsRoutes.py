@@ -1,5 +1,6 @@
 from fastapi import APIRouter
-from app.schemas.blog_schema import BlogCreate
+# from app.schemas.blog_schema import BlogSchema, BlogSchemaUpdate
+from app.models.blog_model import BlogModel
 from app.services.crud.blog_crud import create_blog # type: ignore
 
 router = APIRouter(
@@ -17,8 +18,11 @@ DELETE /api/blogs/{id}: Delete a blog post.
 """
 
 
-@router.post("/")
-async def create_blog(blog: BlogCreate):
+@router.post("/", response_model=None)
+async def post_blog(blog: BlogModel):
+    """
+    is the code updated successfully
+    """
     return create_blog(blog) # type: ignore
     
 
@@ -35,10 +39,10 @@ async def read_blog(id: str):
     return {"message": f"Retrieving blog with ID: {id}"}
 
 
-@router.put("/{id}")
-async def update_blog(id: str, blog: BlogCreate):  # type: ignore
-    """Updates a specific blog post by its ID."""
-    return {"message": f"Updating blog with ID: {id}", "updated_blog": blog}
+# @router.put("/{id}")
+# async def update_blog(id: str, blog: BlogCreate):  # type: ignore
+#     """Updates a specific blog post by its ID."""
+#     return {"message": f"Updating blog with ID: {id}", "updated_blog": blog}
 
 
 @router.delete("/{id}")
