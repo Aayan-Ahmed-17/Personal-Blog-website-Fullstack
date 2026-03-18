@@ -6,7 +6,7 @@ Contains all database operations logic.
 from bson import ObjectId
 from bson.errors import InvalidId
 from fastapi import HTTPException
-from app.db.mongodb import blog_collection
+from app.db.mongodb import get_db
 from app.schemas.serializeObjects import serializeDict, serializeList
 from app.models.blog_model import CreateBlog, UpdateBlog
 
@@ -16,6 +16,7 @@ def create_blog(blog_data: CreateBlog):
     Called on post route | get blog creation data | insert into mongodb
     """
     try:
+        _, blog_collection = get_db()
         result = blog_collection.insert_one(blog_data.model_dump())
 
         blog = blog_collection.find_one({"_id": ObjectId(result.inserted_id)})
@@ -34,6 +35,7 @@ def get_all_blogs():
     Retrieves all blogs from mongodb
     """
     try:
+        _, blog_collection = get_db()
         blogs = blog_collection.find()
         return serializeList(blogs)
 
@@ -46,6 +48,7 @@ def get_blog_by_id(id: str):
     Finds Blog in mongodb via id | return data if found else error
     """
     try:
+        _, blog_collection = get_db()
         blog = blog_collection.find_one({"_id": ObjectId(id)})
 
         if blog is None:
@@ -65,6 +68,7 @@ def update_blog(id: str, blog_data: UpdateBlog):
     Called on PUT route | get blog updation data | updates into mongodb
     """
     try:
+        _, blog_collection = get_db()
         updated = blog_collection.find_one_and_update(
             {"_id": ObjectId(id)}, {"$set": blog_data.model_dump(exclude_unset=True)}
         )

@@ -8,5 +8,21 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# Add root endpoint
+@app.get("/")
+async def root():
+    """Health check endpoint"""
+    return {
+        "status": "ok",
+        "message": "Personal Blog API is running",
+        "version": "1.0.0"
+    }
+
+# Add health check endpoint
+@app.get("/health")
+async def health():
+    """Health check endpoint"""
+    return {"status": "healthy"}
+
 app.include_router(blogsRoutes.router, prefix="/api/v1")
 app.include_router(scraper.router, prefix="/api/v1")
