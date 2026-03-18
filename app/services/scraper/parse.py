@@ -11,7 +11,15 @@ from .extractors import (
     extract_description,
 )
 
-response = get_data(url, headers=headers)
+# Don't fetch data at import time - fetch on demand
+response = None
+
+def fetch_response():
+    """Fetch data on first use"""
+    global response
+    if response is None:
+        response = get_data(url, headers=headers)
+    return response
 
 def parse_blog_container(container: Tag) -> BlogPost:
     return BlogPost(

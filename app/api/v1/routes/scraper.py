@@ -1,4 +1,4 @@
-from app.services.scraper.parse import parse_all_blogs, response
+from app.services.scraper.parse import parse_all_blogs, fetch_response
 from app.services.scraper.scrape import get_data, url, headers
 from fastapi import APIRouter
 
@@ -17,8 +17,15 @@ DELETE /api/scraped/{id}: Delete a specific scraped article.
 
 @router.get("/")
 def read_blogs():
-    blogs = parse_all_blogs(response)
-    return blogs
+    """Fetch and parse blogs on demand"""
+    try:
+        response = fetch_response()
+        if response is None:
+            return {"error": "Could not fetch data from URL"}
+        blogs = parse_all_blogs(response)
+        return blogs
+    except Exception as e:
+        return {"error": f"Failed to parse blogs: {str(e)}"}
 
 
 @router.get("/{id}")
