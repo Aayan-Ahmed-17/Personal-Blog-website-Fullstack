@@ -1,6 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, status
+from fastapi.responses import JSONResponse
 from app.models.blog_model import CreateBlog, UpdateBlog
-from app.services.crud.blog_crud import create_blog, update_blog, get_all_blogs, get_blog_by_id # type: ignore
+from app.services.crud.blog_crud import create_blog, update_blog, get_all_blogs, get_blog_by_id, delete_blog  # type: ignore
 
 router = APIRouter(
     prefix="/blogs",  # All paths in this router will start with "/blogs"
@@ -17,10 +18,9 @@ DELETE /api/blogs/{id}: Delete a blog post.
 """
 
 
-@router.post("/", response_model=None)
-async def post_blog(blog: CreateBlog): # type: ignore
-    return create_blog(blog) # type: ignore
-    
+@router.post("/", status_code=status.HTTP_201_CREATED)
+async def post_blog(blog: CreateBlog):  # type: ignore
+    return create_blog(blog)  # type: ignore
 
 
 @router.get("/")
@@ -36,11 +36,11 @@ async def read_blog(id: str):
 
 
 @router.put("/{id}")
-async def post_blog(id: str, blog_data: UpdateBlog):
-    return update_blog(id=id, blog_data=blog_data) # type: ignore
+async def update_blog_endpoint(id: str, blog_data: UpdateBlog):
+    return update_blog(id=id, blog_data=blog_data)  # type: ignore
 
 
 @router.delete("/{id}")
-async def delete_blog(id: str):
+async def delete_blog_endpoint(id: str):
     """Deletes a specific blog post by its ID."""
-    return {"message": f"Deleting blog with ID: {id}"}
+    return delete_blog(id)

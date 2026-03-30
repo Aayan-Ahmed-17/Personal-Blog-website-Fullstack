@@ -1,6 +1,6 @@
 from app.services.scraper.parse import parse_all_blogs, fetch_response
 from app.services.scraper.scrape import get_data, url, headers
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 router = APIRouter(
     prefix="/scraped",  # All paths in this router will start with "/scraped"
@@ -21,20 +21,22 @@ def read_blogs():
     try:
         response = fetch_response()
         if response is None:
-            return {"error": "Could not fetch data from URL"}
+            raise HTTPException(status_code=500, detail="Could not fetch data from URL")
         blogs = parse_all_blogs(response)
         return blogs
+    except HTTPException:
+        raise
     except Exception as e:
-        return {"error": f"Failed to parse blogs: {str(e)}"}
+        raise HTTPException(status_code=500, detail=f"Failed to parse blogs: {str(e)}")
 
 
 @router.get("/{id}")
 def read_blog(id: str):
     """Retrieves a specific scraped article by its ID."""
-    return {"message": f"Retrieving scraped article with ID: {id}"}
+    raise HTTPException(status_code=501, detail="Not implemented yet")
 
 
 @router.delete("/{id}")
 def delete_blog(id: str):
     """Deletes a specific scraped article by its ID."""
-    return {"message": f"Deleting scraped article with ID: {id}"}
+    raise HTTPException(status_code=501, detail="Not implemented yet")

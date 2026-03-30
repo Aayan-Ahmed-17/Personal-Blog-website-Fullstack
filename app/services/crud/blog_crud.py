@@ -84,3 +84,23 @@ def update_blog(id: str, blog_data: UpdateBlog):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error updating blog: {str(e)}")
+
+
+def delete_blog(id: str):
+    """
+    Called on DELETE route | deletes blog from mongodb
+    """
+    try:
+        _, blog_collection = get_db()
+        result = blog_collection.delete_one({"_id": ObjectId(id)})
+
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Blog not found")
+
+        return {"message": "Blog deleted successfully"}
+
+    except InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid blog ID")
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error deleting blog: {str(e)}")
