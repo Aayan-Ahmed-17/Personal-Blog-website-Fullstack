@@ -14,6 +14,7 @@ from .extractors import (
 # Don't fetch data at import time - fetch on demand
 response = None
 
+
 def fetch_response():
     """Fetch data on first use"""
     global response
@@ -21,13 +22,14 @@ def fetch_response():
         response = get_data(url, headers=headers)
     return response
 
+
 def parse_blog_container(container: Tag) -> BlogPost:
     return BlogPost(
-        blog_link   = extract_blog_link(container), # type: ignore
-        img_link    = extract_img_link(container), # type: ignore
-        title       = extract_title(container), # type: ignore
-        latest_date = extract_latest_date(container), # type: ignore
-        description = extract_description(container), # type: ignore
+        blog_link=extract_blog_link(container),  # type: ignore
+        img_link=extract_img_link(container),  # type: ignore
+        title=extract_title(container),  # type: ignore
+        latest_date=extract_latest_date(container),  # type: ignore
+        description=extract_description(container),  # type: ignore
     )
 
 
@@ -38,5 +40,5 @@ def parse_all_blogs(html) -> List[BlogPost]:
     if not grid:
         return []
 
-    containers = grid.select(sel.BLOG_CONTAINER)   # your 45 containers
+    containers = grid.select(sel.BLOG_CONTAINER)  # your 45 containers
     return [parse_blog_container(c) for c in containers]

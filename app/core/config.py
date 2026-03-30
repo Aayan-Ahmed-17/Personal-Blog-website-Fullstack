@@ -6,6 +6,7 @@ load_dotenv()
 USERNAME = os.getenv("USERNAME", "")
 PASSWORD = os.getenv("PASSWORD", "")
 DB_NAME = os.getenv("DB_NAME", "blog_fullstack")
+URL = os.getenv("URL")
 
 # Build MONGO_URI with SSL certificate workaround
 if USERNAME and PASSWORD:

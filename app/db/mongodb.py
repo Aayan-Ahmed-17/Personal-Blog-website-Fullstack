@@ -15,7 +15,7 @@ def get_db():
             raise ValueError("MONGO_URI is not configured. Please set USERNAME and PASSWORD env variables.")
         
         client = MongoClient(MONGO_URI)
-        database = client[DB_NAME]  # type: ignore
+        database = client[DB_NAME]
         blog_collection = database["blogs"]
     
     return database, blog_collection
