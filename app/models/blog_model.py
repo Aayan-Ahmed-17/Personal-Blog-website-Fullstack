@@ -11,10 +11,10 @@ class CreateBlog(BaseModel):
     )
     title: str = Field(..., min_length=3, description="Enter Blog Title Here...")
     description: str = Field(..., description="Enter Blog Description Here...")
-    created_at : datetime = Field(default_factory=datetime.now)
-    updated_at : datetime = Field(default_factory=datetime.now)
-    
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: datetime = Field(default_factory=datetime.now)
+
+
 class UpdateBlog(BaseModel):
     title: str = Field(..., min_length=3, description="Enter Blog Title Here...")
     description: str = Field(..., description="Enter Blog Description Here...")
-    updated_at : datetime = Field(default_factory=datetime.now)

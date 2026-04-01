@@ -6,6 +6,7 @@ Contains all database operations logic.
 from bson import ObjectId
 from bson.errors import InvalidId
 from fastapi import HTTPException
+from datetime import datetime
 from app.db.mongodb import get_db
 from app.schemas.serializeObjects import serializeDict, serializeList
 from app.models.blog_model import CreateBlog, UpdateBlog
@@ -69,8 +70,10 @@ def update_blog(id: str, blog_data: UpdateBlog):
     """
     try:
         _, blog_collection = get_db()
+        update_data = blog_data.model_dump(exclude_unset=True)
+        update_data["updated_at"] = datetime.now()
         updated = blog_collection.find_one_and_update(
-            {"_id": ObjectId(id)}, {"$set": blog_data.model_dump(exclude_unset=True)}
+            {"_id": ObjectId(id)}, {"$set": update_data}
         )
 
         if updated is None:
