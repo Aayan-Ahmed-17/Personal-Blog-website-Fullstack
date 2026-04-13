@@ -5,7 +5,7 @@ from . import selectors as sel
 
 def extract_blog_link(container: Tag) -> Optional[str]:
     tag = container.select_one(sel.BLOG_LINK)
-    return tag.get("href") if tag else None # type: ignore
+    return f"https://freedium-mirror.cfd/{tag.get('href')}" if tag else None  # type: ignore
 
 
 def extract_img_link(container: Tag) -> Optional[str]:
