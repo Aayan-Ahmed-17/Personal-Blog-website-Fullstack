@@ -1,4 +1,5 @@
 # from app.api.v1.endpoints.blogs import router as blogs_router
+from fastapi import FastAPI
 from app.api.v1.routes import blogsRoutes, scraper
 from fastapi.middleware.cors import CORSMiddleware
 
