@@ -11,6 +11,6 @@ URL = os.getenv("URL")
 # Build MONGO_URI with SSL certificate workaround
 if USERNAME and PASSWORD:
     MONGO_URI = f"mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.r2krjac.mongodb.net/?appName=Cluster0"
-    print("✓ MONGO_URI successfully constructed.", MONGO_URI)
+    print("✓ MONGO_URI successfully constructed.")
 else:
     raise ValueError("❌ ERROR: USERNAME or PASSWORD not found in .env file")
